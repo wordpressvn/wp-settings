@@ -8,7 +8,7 @@ if(isset($_POST['license_save'])) {
     $option->deactivate();
 }
 $lic = get_option($option->section->tab->settings->option_name);
-$status = isset($lic['license_status']) ? trim($lic['license_status']) : '';
+$status = isset($lic['license_status']) ? trim($lic['license_status']) : 'unverified';
 if ( $option->get_value_attribute() && $status !== false && $status == 'valid' ) {
     $license_status = __( 'Your account is now active!' );
     $dashicons      = "dashicons-cloud";
