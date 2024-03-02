@@ -2,7 +2,7 @@
 
 namespace WPVNTeam\WPSettings;
 
-if (! function_exists('view')) {
+if (!function_exists('WPVNTeam\WPSettings\view')) {
     function view($file, $variables = [])
     {
         extract($variables, EXTR_SKIP);

@@ -3,7 +3,7 @@
         <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>"><?php echo $option->get_label(); ?></label>
     </th>
     <td class="forminp forminp-text">
-        <?php \wp_editor($option->get_value_attribute(), $option->get_id_attribute(), [
+        <?php \wp_editor(wp_kses_post($option->get_value_attribute()), $option->get_id_attribute(), [
             'textarea_name' => $option->get_name_attribute(),
             'wpautop' => $option->get_arg('wpautop', true),
             'teeny' => $option->get_arg('teeny', false),

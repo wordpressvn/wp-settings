@@ -1,8 +1,8 @@
 <?php
 
 namespace WPVNTeam\WPSettings;
-
 use WPVNTeam\WPSettings\Options\Checkbox;
+use WPVNTeam\WPSettings\Options\CheckboxMultiple;
 use WPVNTeam\WPSettings\Options\Choices;
 use WPVNTeam\WPSettings\Options\CodeEditor;
 use WPVNTeam\WPSettings\Options\Color;
@@ -11,6 +11,8 @@ use WPVNTeam\WPSettings\Options\Media;
 use WPVNTeam\WPSettings\Options\Select;
 use WPVNTeam\WPSettings\Options\SelectMultiple;
 use WPVNTeam\WPSettings\Options\Text;
+use WPVNTeam\WPSettings\Options\Label;
+use WPVNTeam\WPSettings\Options\Button;
 use WPVNTeam\WPSettings\Options\Password;
 use WPVNTeam\WPSettings\Options\Number;
 use WPVNTeam\WPSettings\Options\Textarea;
@@ -18,6 +20,8 @@ use WPVNTeam\WPSettings\Options\Video;
 use WPVNTeam\WPSettings\Options\WPEditor;
 use WPVNTeam\WPSettings\Options\PostType;
 use WPVNTeam\WPSettings\Options\Taxonomy;
+use WPVNTeam\WPSettings\Options\Role;
+use WPVNTeam\WPSettings\Options\Tools;
 use WPVNTeam\WPSettings\Options\License;
 
 class Option
@@ -38,9 +42,12 @@ class Option
 
         $type_map = apply_filters('wp_settings_option_type_map', [
             'text' => Text::class,
+            'label' => Label::class,
+            'button' => Button::class,
             'password' => Password::class,
             'number' => Number::class,
             'checkbox' => Checkbox::class,
+            'checkbox-multiple' => CheckboxMultiple::class,
             'choices' => Choices::class,
             'textarea' => Textarea::class,
             'wp-editor' => WPEditor::class,
@@ -53,6 +60,8 @@ class Option
             'video' => Video::class,
             'post-type' => PostType::class,
             'taxonomy' => Taxonomy::class,
+            'role' => Role::class,
+            'tools' => Tools::class,
             'license' => License::class,
         ]);
 

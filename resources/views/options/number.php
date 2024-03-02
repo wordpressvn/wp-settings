@@ -4,7 +4,7 @@
     </th>
     <td class="forminp forminp-text">
         <input name="<?php echo esc_attr($option->get_name_attribute()); ?>" id="<?php echo $option->get_id_attribute(); ?>" type="number"
-         value="<?php echo $option->get_value_attribute(); ?>" class="small-text <?php echo $option->get_input_class_attribute(); ?>" <?php echo $option->get_disabled_class_attribute(); ?> <?php foreach($option->get_arg('options', []) as $key => $label) { ?><?php echo $key."='".$label."'"; ?><?php } ?>>
+         value="<?php echo $option->get_value_attribute(); ?>" class="small-text <?php echo $option->get_input_class_attribute(); ?>" <?php foreach($option->get_arg('options', []) as $key => $label) { ?><?php echo $key."='".$label."'"; ?><?php } ?>>
 
         <?php if($description = $option->get_arg('description')) { ?>
             <?php echo $description; ?>

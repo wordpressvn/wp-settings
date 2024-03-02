@@ -26,7 +26,9 @@ class Media extends OptionAbstract
         $attachment = wp_get_attachment_metadata($value);
         $fallback = '/wp-includes/images/media/document.png';
 
-        if (! $attachment) {
+        if (! $attachment && $value) {
+            return $value;
+        } elseif (! $attachment) {
             return $fallback;
         }
 
@@ -69,8 +71,8 @@ class Media extends OptionAbstract
                 }
 
                 .wps-media-wrapper .wps-media-preview {
-                    width: 100px;
-                    background-color: #fff;
+                    width: 80px;
+                    border: 1px solid #ddd;
                     border-radius: 5px;
                     display: flex;
                     align-items: center;

@@ -8,6 +8,6 @@ class WPEditor extends OptionAbstract
 
     public function sanitize($value)
     {
-        return $value;
+        return wp_kses_post($value);
     }
 }

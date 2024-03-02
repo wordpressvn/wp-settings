@@ -4,6 +4,10 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Jeffrey van Rossum",
+            "email": "jeffrey@vanrossum.dev"
+        },
+        {
             "name": "TienCOP",
             "email": "support@wordpressvn.com"
         }

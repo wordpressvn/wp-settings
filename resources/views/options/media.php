@@ -12,11 +12,12 @@
             <?php } else { ?>
                 <div class="wps-media-preview"></div>
             <?php } ?>
-
-            <input name="<?php echo esc_attr($option->get_name_attribute()); ?>" id="<?php echo $option->get_id_attribute(); ?>" type="hidden" value="<?php echo $option->get_value_attribute(); ?>" class="wps-media-target <?php echo $option->get_input_class_attribute(); ?>">
+            <input name="<?php echo esc_attr($option->get_name_attribute()); ?>" id="<?php echo $option->get_id_attribute(); ?>" type="<?php echo $option->get_arg('type', 'hidden'); ?>" value="<?php echo $option->get_value_attribute(); ?>" class="wps-media-target <?php echo $option->get_input_class_attribute(); ?>">
 
             <button class="wps-media-open button"><?php echo $option->get_arg('button_open_text', _e('Select')); ?></button>
             <button class="wps-media-clear button" style="<?php echo empty($option->get_value_attribute()) ? 'display: none;' : ''; ?>"><?php echo $option->get_arg('button_clear_text', _e('Clear')); ?></button>
+            
+            
         </div>
 
         <?php if($description = $option->get_arg('description')) { ?>

@@ -1,3 +1,4 @@
+<section id="<?php echo $section->tab->slug.'-'.$section->slug; ?>" class="tab-content">
 <h2><?php echo $section->title; ?></h2>
 
 <?php if ($section->description) { ?>
@@ -11,3 +12,4 @@
     <?php } ?>
     </tbody>
 </table>
+</section>

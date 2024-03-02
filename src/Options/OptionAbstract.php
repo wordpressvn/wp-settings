@@ -89,18 +89,13 @@ abstract class OptionAbstract
     public function get_hide_class_attribute()
     {
         $class = $this->get_css()['hide_class'] ?? null;
-
-        return ! empty($class) ? $this->section->tab->settings->option_name.esc_attr($class).' hide-if-js' : null;
+        
+        if ($class === 'pro') {
+            return ! empty($class) ? esc_attr($class) : null;
+        }
+        
+        return ! empty($class) ? $this->section->tab->settings->option_name.esc_attr($class) : null;
     }
-
-    public function get_disabled_class_attribute()
-    {
-        $class = $this->get_css()['disabled'] ?? null;
-
-        return ! empty($class) ? esc_attr($class) : null;
-    }
-    
-   // disabled="disabled"
 
     public function get_name_attribute()
     {
@@ -134,7 +129,7 @@ abstract class OptionAbstract
 
     public function get_default_value()
     {
-        $this->args['default'] ?? null;
+        return $this->args['default'] ?? null;
     }
 
     public function get_value_attribute()
