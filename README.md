@@ -290,7 +290,6 @@ $settings->add_option('custom-option', [
 
 ## Contributors
 * [Jeffrey van Rossum](https://github.com/jeffreyvr)
-* [All contributors](https://github.com/jeffreyvr/wp-settings/graphs/contributors)
 
 ## License
 MIT. Please see the [License File](/LICENSE) for more information.
