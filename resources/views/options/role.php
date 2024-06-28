@@ -9,7 +9,7 @@
                 $all_roles = $wp_roles->get_names();
                 foreach ( $all_roles as $key => $label ) { ?>
                 <p><label>
-                    <input type="checkbox" id="<?php echo $option->get_id_attribute(); ?>_<?php echo $key; ?>" name="<?php echo esc_attr($option->get_name_attribute()); ?>" value="<?php echo $key; ?>" <?php echo in_array($key, $option->get_value_attribute() ?? []) ? 'checked' : ''; ?>>
+                    <input type="checkbox" id="<?php echo $option->get_id_attribute(); ?>_<?php echo $key; ?>" name="<?php echo esc_attr($option->get_name_attribute()); ?>" value="<?php echo $key; ?>" <?php echo in_array($key, $option->get_value_attribute() ?? []) ? 'checked' : null; ?>>
                     <?php echo in_array($key, $option->get_value_attribute() ?? []) ? "<span style='color:#0e76a8;'>$label</span>" : $label; ?>
                 </label></p>
             <?php }
@@ -34,7 +34,7 @@
         <?php } elseif(!empty($users)) { ?>
                 <select id="<?php echo $option->get_id_attribute(); ?>" name="<?php echo esc_attr($option->get_name_attribute()); ?>" class="<?php echo $option->get_input_class_attribute(); ?>">
                     <?php foreach ($users as $user) : ?>
-                        <option value="<?php echo esc_attr($user->ID); ?>" <?php echo in_array($user->ID, $option->get_value_attribute() ?? []) ? 'checked' : ''; ?>><?php echo esc_html($user->display_name); ?></option>
+                        <option value="<?php echo esc_attr($user->ID); ?>" <?php echo in_array($user->ID, $option->get_value_attribute() ?? []) ? 'selected="selected"' : ''; ?>><?php echo esc_html($user->display_name); ?></option>
                     <?php endforeach; ?>
                 </select>
         <?php } ?>

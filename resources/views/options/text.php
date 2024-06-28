@@ -10,7 +10,9 @@
             value="<?php echo $option->get_value_attribute(); ?>"
             class="<?php echo $option->get_input_class_attribute(); ?>">
 
-        <?php if($description = $option->get_arg('description')) { ?>
+        <?php if(($description = $option->get_arg('description')) && ($option->get_arg('type') == 'number')) { ?>
+            <?php echo $description; ?>
+        <?php } elseif ($description) { ?>
             <p class="description"><?php echo $description; ?></p>
         <?php } ?>
 
