@@ -129,7 +129,7 @@ class Media extends OptionAbstract
                             target.value = attachment.id;
 
                             if (attachment.type === 'image') {
-                                preview.innerHTML = '<img src="' + attachment.sizes.thumbnail.url + '">';
+                                preview.innerHTML = '<img src="' + attachment.url + '">'; //attachment.sizes.thumbnail.url
                             } else {
                                 preview.innerHTML = '<img src="' + attachment.icon + '">';
                             }

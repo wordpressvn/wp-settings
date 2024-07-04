@@ -1,6 +1,6 @@
 <?php
 
-/** v1.2.0 **/
+/** v1.3.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -133,6 +133,7 @@ class WPSettings
         add_action('admin_head', [$this, 'styling'], 20);
         add_action('admin_head', [$this, 'stylepro'], 20);
         add_action('admin_footer', [$this, 'scripting'], 20);
+        add_filter('admin_footer_text', [$this, 'admin_rate_us']);
     }
 
     public function is_on_settings_page()
@@ -192,6 +193,7 @@ class WPSettings
     public function scripting()
     {
         if ($this->is_on_toplevel_page() || $this->is_on_settings_page() || $this->is_on_parent_page()) {
+            add_thickbox();
         ?><script>
                 (function($){
                     $('[class^="<?php echo $this->option_name; ?>"]').each(function(){
@@ -229,6 +231,20 @@ class WPSettings
                 })(jQuery);
             </script>
         <?php
+        }
+    }
+    
+    public function admin_rate_us( $footer_text ) {
+        if ( isset($_GET['page']) && $_GET['page'] === $this->slug ) {
+            $thank_text = sprintf(
+                /* translators: 1. link to plugin site; 2. link to plugin name */
+                __( 'Thank you for using <a href="%1$s" target="_blank">%2$s</a>! Powered by 🐯 <strong>TienCOP</strong>' ),
+                $this->links,
+                $this->title
+            );
+            return str_replace( '</span>', '', $footer_text ) . ' | ' . $thank_text . '</span>';
+        } else {
+            return $footer_text;
         }
     }
 

@@ -4,6 +4,12 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 1.3.0 - 2024-07-04
+
+- [FIX] image
+- [NEW] footer_text
+- [NEW] popup
+
 ## 1.2.0 - 2024-06-28
 
 - [NEW] links
