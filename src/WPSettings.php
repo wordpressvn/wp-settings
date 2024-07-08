@@ -134,6 +134,7 @@ class WPSettings
         add_action('admin_head', [$this, 'stylepro'], 20);
         add_action('admin_footer', [$this, 'scripting'], 20);
         add_filter('admin_footer_text', [$this, 'admin_rate_us']);
+        add_action('admin_notices', [$this, 'admin_notice']);
     }
 
     public function is_on_settings_page()
@@ -245,6 +246,24 @@ class WPSettings
             return str_replace( '</span>', '', $footer_text ) . ' | ' . $thank_text . '</span>';
         } else {
             return $footer_text;
+        }
+    }
+
+    public function admin_notice() {
+        $lic = get_option($this->option_name);
+        if ( (!isset($lic['license_status']) || $lic['license_status'] !== 'valid') && isset($_GET['page']) && $_GET['page'] === $this->slug ) {
+            wp_admin_notice(
+                sprintf(
+                    /* translators: 1. link to plugin site; 2. link to plugin name */
+                    __( 'Activate <a href="%1$s">your license</a> to enable access to updates, support & PRO features for <strong>%2$s</strong>.' ),
+                    admin_url('admin.php?page='.$this->slug.'&tab=license'),
+                    $this->title
+                ),
+                array(
+                    'type'               => 'warning',
+                    'dismissible'        => false,
+                )
+            );
         }
     }
 
