@@ -1,6 +1,6 @@
 <?php
 
-/** v1.3.0 **/
+/** v1.4.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -227,6 +227,12 @@ class WPSettings
                         $('#' + tabId).show();
                         $('.nav-section a').removeClass('nav-tab-active');
                         $(this).addClass('nav-tab-active');
+                    });
+                    $('.select-all').click(function() {
+                        $(this).closest('td').find('input[type="checkbox"]').prop('checked', true);
+                    });
+                    $('.deselect').click(function() {
+                        $(this).closest('td').find('input[type="checkbox"]').prop('checked', false);
                     });
 
                 })(jQuery);

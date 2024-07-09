@@ -1,8 +1,6 @@
 <?php
-if(isset($_POST['license_save'])) {
+if(isset($_POST['license_activate'])) {
     $option->check();
-    $option->activate();
-} elseif(isset($_POST['license_activate'])) {
     $option->activate();
 } elseif(isset($_POST['license_deactivate'])) {
     $option->deactivate();
@@ -27,13 +25,6 @@ if ( $option->get_value_attribute() && $status !== false && $status == 'valid' )
     $text_link = __( 'Free License' );
 }
 ?>
-<?php if($donate = $option->get_arg('donate')) { ?>
-<tr valign="top"><th><?php _e( 'Donate' ); ?></th>
-<td>
-    <a href="<?php echo $option->get_arg('download'); ?>" class='button' target="_blank"  /><span class='dashicons dashicons-admin-network' style='line-height:30px;margin-right:5px;'></span><?php echo $text_link; ?></a>
-    <a href="<?php echo $donate; ?>" class='button' target="_blank"  /><span class='dashicons dashicons-money-alt' style='line-height:30px;margin-right:5px;'></span><?php _e( 'Donate' ); ?></a>
-</td></tr>
-<?php } ?>
 <tr valign="top">
     <th scope="row" class="titledesc">
         <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>"><?php echo $option->get_label(); ?></label>
@@ -41,32 +32,23 @@ if ( $option->get_value_attribute() && $status !== false && $status == 'valid' )
     <td class="forminp forminp-text">
         <input name="<?php echo esc_attr($option->get_name_attribute()); ?>" id="<?php echo $option->get_id_attribute(); ?>" type="password" value="<?php echo $option->get_value_attribute(); ?>" class="regular-text <?php echo $option->get_input_class_attribute(); ?>" <?php echo $input_disabled; ?>>
         <span style="<?php echo $activate_btn; ?>">
-            <input type='submit' class='button-primary' name='license_save' value="<?php _e( 'Save' ); ?>" />
+            <input type='submit' class='button-primary' name='license_activate' value="<?php _e( 'Activate' ); ?>" />
         </span>
-        <?php if($option->get_arg('download') && !$donate) { ?>
         <span style="<?php echo $deactivate_btn; ?>">
-            <a href="<?php echo $option->get_arg('download'); ?>" class='button' target="_blank" /><?php _e( 'Support' ); ?></a>
+        <input type='submit' class='button-secondary' name='license_deactivate' value="<?php _e( 'Deactivate' ); ?>" />
         </span>
-        <?php } ?>
+        <p class="description">
+            <a href="<?php echo $option->get_arg('download'); ?>" target="_blank" /><?php _e( 'Don\'t have a license? Click here to purchase.' ); ?></a>
+        </p>
         <?php if($error = $option->has_error()) { ?>
             <div class="wps-error-feedback"><?php echo $error; ?></div>
         <?php } ?>
     </td>
 </tr>
-<tr valign="top"><th><?php _e( 'Activate' ); ?></th>
+<tr valign="top"><th><?php _e( 'Status' ); ?></th>
 <td>
-    <span style="<?php echo $activate_btn; ?>">
-        <input type='submit' class='button-secondary' name='license_activate' value="<?php _e( 'Activate' ); ?>" style='margin-right: 10px;' />
-    </span>
-    <span style="<?php echo $deactivate_btn; ?>">
-    <input type='submit' class='button-secondary' name='license_deactivate' value="<?php _e( 'Deactivate' ); ?>" style='margin-right: 10px;' />
-    </span>
     <span style="line-height:30px; <?php echo $color; ?>">
         <span class='dashicons <?php echo $dashicons ?>' style='line-height:30px;'></span>
         <?php echo $license_status ?>
     </span>
 </td></tr>
-<tr valign="top">
-    <th><?php _e( 'Status' ); ?></th>
-    <td><span style="<?php echo $color; ?>"><?php echo $status ?></span></td>
-</tr>

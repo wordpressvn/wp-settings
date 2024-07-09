@@ -4,6 +4,11 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 1.4.0 - 2024-07-09
+
+- [FIX] license
+- [FIX] checkbox-multiple
+
 ## 1.3.0 - 2024-07-04
 
 - [FIX] image
