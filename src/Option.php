@@ -11,10 +11,8 @@ use WPVNTeam\WPSettings\Options\Media;
 use WPVNTeam\WPSettings\Options\Select;
 use WPVNTeam\WPSettings\Options\SelectMultiple;
 use WPVNTeam\WPSettings\Options\Text;
-use WPVNTeam\WPSettings\Options\Label;
 use WPVNTeam\WPSettings\Options\Button;
 use WPVNTeam\WPSettings\Options\Password;
-use WPVNTeam\WPSettings\Options\Number;
 use WPVNTeam\WPSettings\Options\Textarea;
 use WPVNTeam\WPSettings\Options\Video;
 use WPVNTeam\WPSettings\Options\WPEditor;
@@ -42,10 +40,8 @@ class Option
 
         $type_map = apply_filters('wp_settings_option_type_map', [
             'text' => Text::class,
-            'label' => Label::class,
             'button' => Button::class,
             'password' => Password::class,
-            'number' => Number::class,
             'checkbox' => Checkbox::class,
             'checkbox-multiple' => CheckboxMultiple::class,
             'choices' => Choices::class,

@@ -1,6 +1,6 @@
 <?php
 
-/** v1.4.0 **/
+/** v1.6.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -32,9 +32,9 @@ class WPSettings
 
     public $version;
 
-    public $links;
+    public $sidebar;
 
-    public $lite;
+    public $plugin_data;
 
     public function __construct($title, $slug = null)
     {
@@ -101,16 +101,22 @@ class WPSettings
         return $this;
     }
 
-    public function set_links($links = null)
-    {
-        $this->links = $links;
+    public function set_sidebar($title = null, $message = null) {
+        $this->sidebar = array(
+            'title' => $title,
+            'message' => $message
+        );
 
         return $this;
     }
 
-    public function set_lite($lite = null)
+    public function get_sidebar() {
+        return $this->sidebar;
+    }
+
+    public function set_plugin_data($plugin_data = null)
     {
-        $this->lite = $lite;
+        $this->plugin_data = $plugin_data;
 
         return $this;
     }
@@ -185,7 +191,246 @@ class WPSettings
     {
         if ($this->is_on_toplevel_page() || $this->is_on_settings_page() || $this->is_on_parent_page()) {
         ?>
-        <style>.pro * {pointer-events: none;opacity: 0.8;}.cop { border-bottom: 1px solid #dedae6;background: #fff;margin-left: -20px;display: flex;justify-content: space-between;padding: 0 20px;align-items: center;}.cop > span {display: flex;align-items: center;}.cop > span a{margin-left: 5px;} .cop > h2::after {padding: 0 5px;background: linear-gradient(90.52deg, #3E8BFF 0.44%, #A45CFF 113.3%);border-radius: 100px;font-size: 11px;color: #fff;} .cop-lite > h2::after {content: "LITE "; margin-left:5px; padding: 0 5px;background: linear-gradient(90.52deg, #72aee6 0.44%, #72aee6 113.3%);border-radius: 100px;font-size: 11px;color: #fff;} .pro > th {position: relative;}.pro > th::after {content: "PRO ";position: absolute;top: 23px;right: 0;padding: 0 5px;background: #ff3030;border-radius: 100px;font-size: 11px;color: #fff;} #nav-cop{position:sticky;top:32px;z-index:1020;margin-left:-20px;background:#fff;padding:0 0 0 20px}#nav-cop .nav-menu{display:flex;flex-wrap:wrap;list-style-image:none;list-style-type:none;margin:0;padding:0}#nav-cop .nav-menu .nav-item{margin-bottom:0}#nav-cop .nav-link{border-bottom:3px solid #fff;color:#1e1e1e;display:inline-block;padding:10px 12px 10px;text-decoration:none;white-space:nowrap}#nav-cop .nav-link > span{margin-right:5px;}#nav-cop .nav-link.active{border-bottom-color:#5f3afc;font-weight: 500;}#nav-cop .nav-menu li:hover>a,#nav-cop .nav-menu li>a:focus {background-color: #f9f9f9;border-bottom-color: #5f3afc}.forminp-check{display:flex;align-items:center}.forminp-check input{width:0!important;height:0!important;opacity:0!important;position:absolute}.forminp-check input+label{position:relative;background:silver;width:40px;min-width:40px;height:22px;margin-right:8px;display:inline-flex;align-items:center;border-radius:25px;cursor:pointer;transition:background .2s ease-in-out;text-indent:calc( 40px + 10px)}.forminp-check input+label:after{content:"";background:#fff;width:calc(22px - (3px * 2));height:calc(22px - (3px * 2));position:absolute;top:3px;left:3px;border-radius:50%;transition:left .3s ease-in-out,background .2s ease-in-out}.forminp-check input:checked+label{background:linear-gradient(90.52deg,#3e8bff .44%,#a45cff 113.3%)}.forminp-check input:checked+label:after{left:calc(100% - calc(22px - 3px))}
+        <style>
+        header {
+            background: #fff;
+            margin-left: -20px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            align-items: center;
+            box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
+        }
+        header > h2 > span {
+            margin-left: 5px;
+            padding: 0 5px;
+            background: linear-gradient(90.52deg, #3E8BFF 0.44%, #A45CFF 113.3%);
+            border-radius: 100px;
+            font-size: 11px;
+            color: #fff;
+        }
+        #poststuff #post-body > div {
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
+        }
+
+        #wrap-extra .form-table th .dashicons {
+            color: #8796af;
+        }
+
+        .notice-success,
+        .notice-warning,
+        .notice-error,
+        .notice-info {
+            border-radius: 5px;
+            border-top-width: 0px;
+            border-right-width: 0px;
+            border-bottom-width: 0px;
+        }
+        .notice-success {
+            background: #edf7ef
+        }
+        .notice-warning {
+            background: #fffbf0
+        }
+        .notice-error {
+            background: #f7eeeb
+        }
+        .notice-info {
+            background: #edf5f7
+        }
+        .nav-tab {
+            border-top-color: #fff;
+            border-right-color: #fff;
+            border-left-color: #fff;
+            background: #fff;
+        }
+        .nav-tab-wrapper {
+            border-bottom: 1px solid #EAECF0;
+        }
+        .nav-tab-active,
+        .nav-tab-active:hover,
+        .nav-tab-active:focus,
+        .nav-tab-active:focus:active {
+            border: 1px solid #EAECF0 !important;
+            border-top: 1px solid #5f3afc !important;
+            border-bottom: 1px solid #FFF !important;
+            background: #FFF !important;
+            color: #000;
+        }
+        .nav-tab:hover,
+        .nav-tab:focus {
+            background-color: #f6f6f6 !important;
+        }
+        .nav-tab {
+            padding: 5px 15px !important;
+        }
+        .nav-tab .dashicons {
+            color: #555d66;
+            font-size: 16px;
+            line-height: 24px;
+            margin-right: 5px;
+            margin-left: -5px;
+        }
+        .pro * {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        pro {
+            padding: 0 5px;
+            background: #ff3030;
+            border-radius: 100px;
+            font-size: 11px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .pro > th {
+            position: relative;
+        }
+        .pro > th::after {
+            content: "PRO ";
+            position: absolute;
+            top: 23px;
+            right: 0;
+            padding: 0 5px;
+            background: #ff3030;
+            border-radius: 100px;
+            font-size: 11px;
+            color: #fff;
+        }
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        .nav-menu .nav-item {
+            margin-bottom: 0;
+        }
+        .nav-menu .nav-link {
+            transition: all 0.3s ease 0s;
+            color: #555d66;
+            display: inline-block;
+            padding: 10px;
+            text-decoration: none;
+            position: relative;
+        }
+        .nav-menu .nav-link > span {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .nav-menu .nav-link.active,
+        .nav-menu li:hover>a,
+        .nav-menu li>a:focus {
+            background: #F9F9F9;
+            color: #191e23;
+        }
+
+        .nav-menu .nav-link.active::before,
+        .nav-menu li:hover>a::before,
+        .nav-menu li>a:focus::before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            height: 2px;
+            width: 100%;
+            background-color: #5f3afc;
+            border-radius: 2px;
+            animation: slideIn 0.4s ease forwards;
+        }
+        @keyframes slideIn {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+        .forminp-check {
+            display: flex;
+            align-items: center
+        }
+        .forminp-check input {
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            position: absolute
+        }
+        .forminp-check input+label {
+            margin-top: 5px;
+            position: relative;
+            background: #a9adb3;
+            width: 36px;
+            min-width: 36px;
+            height: 18px;
+            margin-right: 8px;
+            display: inline-flex;
+            align-items: center;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            text-indent: calc(36px + 8px)
+        }
+        .forminp-check input+label:after {
+            content: "";
+            background: #fff;
+            width: calc(18px - (3px * 2));
+            height: calc(18px - (3px * 2));
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            border-radius: 50%;
+            transition: left .3s ease-in-out, background .2s ease-in-out
+        }
+        .forminp-check input:checked+label {
+            background: linear-gradient(90.52deg, #3e8bff .44%, #a45cff 113.3%)
+        }
+        .forminp-check input:checked+label:after {
+            left: calc(100% - calc(18px - 3px))
+        }
+        .description span:nth-of-type(1) {
+            display: none;
+        }
+        .forminp-check input:checked ~ .description span:nth-of-type(1) {
+            display: inline;
+        }
+        .forminp-check input:checked ~ .description span:nth-of-type(2) {
+            display: none;
+        }
+        .form-table td,
+        .form-table th {
+            padding: 15px 20px !important;
+        }
+        #wrap-extra .title,
+        #wrap-extra .submit {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        #wrap-extra .sidebar h3 {
+            padding: 0 15px;
+        }
+
+        #wrap-extra .sidebar > div {
+            padding: 0 15px 15px;
+        }
+
+        #wrap-extra hr {
+            border-top: 1px solid #EAECF0;
+            border-bottom: unset !important;
+        }
+        #wpfooter {
+            padding: 15px 20px;
+            border-top: 1px solid #EAECF0;
+            background: #fff;
+        }
+        #footer-thankyou {
+            font-style: normal;
+        }
         </style>
         <?php
         }
@@ -206,6 +451,8 @@ class WPSettings
                         parent.on('change', function(){
                             if (classList.includes('hidden')) {
                                 children.toggleClass('hidden', !this.checked);
+                            } else if (classList.includes('visible')) {
+                                children.toggleClass('hidden', this.checked);
                             } else {
                                 childrens.prop('disabled', !this.checked);
                             }
@@ -213,6 +460,8 @@ class WPSettings
 
                         if (classList.includes('hidden')) {
                             children.toggleClass('hidden', !parent.is(':checked'));
+                        } else if (classList.includes('visible')) {
+                            children.toggleClass('hidden', parent.is(':checked'));
                         } else {
                             childrens.prop('disabled', !parent.is(':checked'));
                         }
@@ -223,7 +472,7 @@ class WPSettings
                     $('.nav-section a').on('click', function(e) {
                         e.preventDefault();
                         $('.nav-tab-content .tab-content').hide();
-                        var tabId = $(this).data('tab');
+                        var tabId = $(this).data('section');
                         $('#' + tabId).show();
                         $('.nav-section a').removeClass('nav-tab-active');
                         $(this).addClass('nav-tab-active');
@@ -234,7 +483,6 @@ class WPSettings
                     $('.deselect').click(function() {
                         $(this).closest('td').find('input[type="checkbox"]').prop('checked', false);
                     });
-
                 })(jQuery);
             </script>
         <?php
@@ -242,12 +490,17 @@ class WPSettings
     }
     
     public function admin_rate_us( $footer_text ) {
-        if ( isset($_GET['page']) && $_GET['page'] === $this->slug ) {
+        if ( isset($_GET['page']) && $_GET['page'] === $this->slug && $this->plugin_data ) {
+            if( ! function_exists('get_plugin_data') ){
+                require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            }
+            $plugin_data = get_plugin_data( $this->plugin_data );
             $thank_text = sprintf(
-                /* translators: 1. link to plugin site; 2. link to plugin name */
-                __( 'Thank you for using <a href="%1$s" target="_blank">%2$s</a>! Powered by 🐯 <strong>TienCOP</strong>' ),
-                $this->links,
-                $this->title
+                /* translators: 1. link to plugin uri; 2. link to plugin name; 3. link to author name */
+                __( 'Thank you for using <a href="%1$s" target="_blank">%2$s</a>. Made with ♥ by <strong>%3$s</strong>' ),
+                $plugin_data['PluginURI'],
+                $plugin_data['Name'],
+                $plugin_data['AuthorName']
             );
             return str_replace( '</span>', '', $footer_text ) . ' | ' . $thank_text . '</span>';
         } else {

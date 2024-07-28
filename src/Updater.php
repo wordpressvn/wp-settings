@@ -13,18 +13,18 @@ if ( ! class_exists('WPVNTeam\\WPSettings\\Updater')) {
  * Allows plugins to use their own update API.
  *
  * @author Easy Digital Downloads
- * @version 1.9.2
+ * @version 1.9.3
  */
 class Updater {
 
-	private $api_url              = '';
-	private $api_data             = array();
-	private $plugin_file          = '';
-	private $name                 = '';
-	private $slug                 = '';
-	private $version              = '';
-	private $wp_override          = false;
-	private $beta                 = false;
+	private $api_url     = '';
+	private $api_data    = array();
+	private $plugin_file = '';
+	private $name        = '';
+	private $slug        = '';
+	private $version     = '';
+	private $wp_override = false;
+	private $beta        = false;
 	private $failed_request_cache_key;
 
 	/**
@@ -33,9 +33,9 @@ class Updater {
 	 * @uses plugin_basename()
 	 * @uses hook()
 	 *
-	 * @param string  $_api_url     The URL pointing to the custom API endpoint.
-	 * @param string  $_plugin_file Path to the plugin file.
-	 * @param array   $_api_data    Optional data to send with API calls.
+	 * @param string $_api_url     The URL pointing to the custom API endpoint.
+	 * @param string $_plugin_file Path to the plugin file.
+	 * @param array  $_api_data    Optional data to send with API calls.
 	 */
 	public function __construct( $_api_url, $_plugin_file, $_api_data = null ) {
 
@@ -43,30 +43,27 @@ class Updater {
 
 		$this->api_url                  = trailingslashit( $_api_url );
 		$this->api_data                 = $_api_data;
-        if ($_plugin_file !== null) {
-            $this->plugin_file              = $_plugin_file;
-            $this->name                     = plugin_basename( $_plugin_file );
-            $this->slug                     = basename( $_plugin_file, '.php' );
-            $this->version                  = $_api_data['version'];
-            $this->wp_override              = isset( $_api_data['wp_override'] ) ? (bool) $_api_data['wp_override'] : false;
-            $this->beta                     = ! empty( $this->api_data['beta'] ) ? true : false;
-            $this->failed_request_cache_key = 'edd_sl_failed_http_' . md5( $this->api_url );
+		$this->plugin_file              = $_plugin_file;
+		$this->name                     = plugin_basename( $_plugin_file );
+		$this->slug                     = basename( dirname( $_plugin_file ) );
+		$this->version                  = $_api_data['version'];
+		$this->wp_override              = isset( $_api_data['wp_override'] ) ? (bool) $_api_data['wp_override'] : false;
+		$this->beta                     = ! empty( $this->api_data['beta'] ) ? true : false;
+		$this->failed_request_cache_key = 'edd_sl_failed_http_' . md5( $this->api_url );
 
-            $edd_plugin_data[ $this->slug ] = $this->api_data;
+		$edd_plugin_data[ $this->slug ] = $this->api_data;
 
-            /**
-             * Fires after the $edd_plugin_data is setup.
-             *
-             * @since x.x.x
-             *
-             * @param array $edd_plugin_data Array of EDD SL plugin data.
-             */
-            do_action( 'post_edd_sl_plugin_updater_setup', $edd_plugin_data );
+		/**
+		 * Fires after the $edd_plugin_data is setup.
+		 *
+		 * @since x.x.x
+		 *
+		 * @param array $edd_plugin_data Array of EDD SL plugin data.
+		 */
+		do_action( 'post_edd_sl_plugin_updater_setup', $edd_plugin_data );
 
-            // Set up hooks.
-            $this->init();
-        }
-
+		// Set up hooks.
+		$this->init();
 	}
 
 	/**
@@ -82,7 +79,6 @@ class Updater {
 		add_filter( 'plugins_api', array( $this, 'plugins_api_filter' ), 10, 3 );
 		add_action( 'after_plugin_row', array( $this, 'show_update_notification' ), 10, 2 );
 		add_action( 'admin_init', array( $this, 'show_changelog' ) );
-
 	}
 
 	/**
@@ -95,12 +91,10 @@ class Updater {
 	 *
 	 * @uses api_request()
 	 *
-	 * @param array   $_transient_data Update array build by WordPress.
+	 * @param array $_transient_data Update array build by WordPress.
 	 * @return array Modified update array with custom plugin data.
 	 */
 	public function check_update( $_transient_data ) {
-
-		global $pagenow;
 
 		if ( ! is_object( $_transient_data ) ) {
 			$_transient_data = new stdClass();
@@ -110,7 +104,7 @@ class Updater {
 			return $_transient_data;
 		}
 
-		$current = $this->get_repo_api_data();
+		$current = $this->get_repo_api_data(); //$this->get_update_transient_data();
 		if ( false !== $current && is_object( $current ) && isset( $current->new_version ) ) {
 			if ( version_compare( $this->version, $current->new_version, '<' ) ) {
 				$_transient_data->response[ $this->name ] = $current;
@@ -158,6 +152,35 @@ class Updater {
 	}
 
 	/**
+	 * Gets a limited set of data from the API response.
+	 * This is used for the update_plugins transient.
+	 *
+	 * @since 3.8.12
+	 * @return \stdClass|false
+	 */
+	private function get_update_transient_data() {
+		$version_info = $this->get_repo_api_data();
+
+		if ( ! $version_info ) {
+			return false;
+		}
+
+		$limited_data               = new \stdClass();
+		$limited_data->slug         = $this->slug;
+		$limited_data->plugin       = $this->name;
+		$limited_data->url          = $version_info->url;
+		$limited_data->package      = $version_info->package;
+		$limited_data->icons        = $this->convert_object_to_array( $version_info->icons );
+		$limited_data->banners      = $this->convert_object_to_array( $version_info->banners );
+		$limited_data->new_version  = $version_info->new_version;
+		$limited_data->tested       = $version_info->tested;
+		$limited_data->requires     = $version_info->requires;
+		$limited_data->requires_php = $version_info->requires_php;
+
+		return $limited_data;
+	}
+
+	/**
 	 * Gets the plugin's tested version.
 	 *
 	 * @since 1.9.2
@@ -192,8 +215,8 @@ class Updater {
 	/**
 	 * Show the update notification on multisite subsites.
 	 *
-	 * @param string  $file
-	 * @param array   $plugin
+	 * @param string $file
+	 * @param array  $plugin
 	 */
 	public function show_update_notification( $file, $plugin ) {
 
@@ -260,18 +283,18 @@ class Updater {
 
 		printf(
 			/* translators: the plugin name. */
-			esc_html__( 'There is a new version of %1$s available.', 'wp-extra' ),
+			esc_html__( 'There is a new version of %1$s available.', 'easy-digital-downloads' ),
 			esc_html( $plugin['Name'] )
 		);
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
 			echo ' ';
-			esc_html_e( 'Contact your network administrator to install the update.', 'wp-extra' );
+			esc_html_e( 'Contact your network administrator to install the update.', 'easy-digital-downloads' );
 		} elseif ( empty( $update_cache->response[ $this->name ]->package ) && ! empty( $changelog_link ) ) {
 			echo ' ';
 			printf(
-				/* translators: 1. opening anchor tag, do not translate 2. the new plugin version 3. closing anchor tag, do not translate. */
-				__( '%1$sView version %2$s details%3$s.', 'wp-extra' ),
+				/* translators: 1: opening anchor tag, do not translate 2. the new plugin version 3. closing anchor tag, do not translate. */
+				__( '%1$sView version %2$s details%3$s.', 'easy-digital-downloads' ),
 				'<a target="_blank" class="thickbox open-plugin-details-modal" href="' . esc_url( $changelog_link ) . '">',
 				esc_html( $update_cache->response[ $this->name ]->new_version ),
 				'</a>'
@@ -279,7 +302,7 @@ class Updater {
 		} elseif ( ! empty( $changelog_link ) ) {
 			echo ' ';
 			printf(
-				__( '%1$sView version %2$s details%3$s or %4$supdate now%5$s.', 'wp-extra' ),
+				__( '%1$sView version %2$s details%3$s or %4$supdate now%5$s.', 'easy-digital-downloads' ),
 				'<a target="_blank" class="thickbox open-plugin-details-modal" href="' . esc_url( $changelog_link ) . '">',
 				esc_html( $update_cache->response[ $this->name ]->new_version ),
 				'</a>',
@@ -290,7 +313,7 @@ class Updater {
 			printf(
 				' %1$s%2$s%3$s',
 				'<a target="_blank" class="update-link" href="' . esc_url( wp_nonce_url( $update_link, 'upgrade-plugin_' . $file ) ) . '">',
-				esc_html__( 'Update now.', 'wp-extra' ),
+				esc_html__( 'Update now.', 'easy-digital-downloads' ),
 				'</a>'
 			);
 		}
@@ -317,9 +340,9 @@ class Updater {
 	 *
 	 * @uses api_request()
 	 *
-	 * @param mixed   $_data
-	 * @param string  $_action
-	 * @param object  $_args
+	 * @param mixed  $_data
+	 * @param string $_action
+	 * @param object $_args
 	 * @return object $_data
 	 */
 	public function plugins_api_filter( $_data, $_action = '', $_args = null ) {
@@ -346,15 +369,15 @@ class Updater {
 			),
 		);
 
-		// Get the transient where we store the api request for this plugin for 24 hours
+		// Get the transient where we store the api request for this plugin for 24 hours.
 		$edd_api_request_transient = $this->get_cached_version_info();
 
-		//If we have no transient-saved value, run the API, set a fresh transient with the API value, and return that value too right now.
+		// If we have no transient-saved value, run the API, set a fresh transient with the API value, and return that value too right now.
 		if ( empty( $edd_api_request_transient ) ) {
 
 			$api_response = $this->api_request( 'plugin_information', $to_send );
 
-			// Expires in 3 hours
+			// Expires in 3 hours.
 			$this->set_version_info_cache( $api_response );
 
 			if ( false !== $api_response ) {
@@ -388,6 +411,10 @@ class Updater {
 			$_data->plugin = $this->name;
 		}
 
+		if ( ! isset( $_data->version ) && ! empty( $_data->new_version ) ) {
+			$_data->version = $_data->new_version;
+		}
+
 		return $_data;
 	}
 
@@ -418,8 +445,8 @@ class Updater {
 	/**
 	 * Disable SSL verification in order to prevent download update failures
 	 *
-	 * @param array   $args
-	 * @param string  $url
+	 * @param array  $args
+	 * @param string $url
 	 * @return object $array
 	 */
 	public function http_request_args( $args, $url ) {
@@ -428,7 +455,6 @@ class Updater {
 			$args['sslverify'] = $this->verify_ssl();
 		}
 		return $args;
-
 	}
 
 	/**
@@ -438,8 +464,8 @@ class Updater {
 	 * @uses wp_remote_post()
 	 * @uses is_wp_error()
 	 *
-	 * @param string  $_action The requested action.
-	 * @param array   $_data   Parameters for the API action.
+	 * @param string $_action The requested action.
+	 * @param array  $_data   Parameters for the API action.
 	 * @return false|object|void
 	 */
 	private function api_request( $_action, $_data ) {
@@ -449,7 +475,7 @@ class Updater {
 			return;
 		}
 
-		// Don't allow a plugin to ping itself
+		// Don't allow a plugin to ping itself.
 		if ( trailingslashit( home_url() ) === $this->api_url ) {
 			return false;
 		}
@@ -522,7 +548,7 @@ class Updater {
 		}
 
 		if ( ! current_user_can( 'update_plugins' ) ) {
-			wp_die( esc_html__( 'You do not have permission to install plugin updates', 'wp-extra' ), esc_html__( 'Error', 'wp-extra' ), array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to install plugin updates', 'easy-digital-downloads' ), esc_html__( 'Error', 'easy-digital-downloads' ), array( 'response' => 403 ) );
 		}
 
 		$version_info = $this->get_repo_api_data();
@@ -619,7 +645,7 @@ class Updater {
 
 		$cache = get_option( $cache_key );
 
-		// Cache is expired
+		// Cache is expired.
 		if ( empty( $cache['timeout'] ) || time() > $cache['timeout'] ) {
 			return false;
 		}
@@ -631,7 +657,6 @@ class Updater {
 		}
 
 		return $cache['value'];
-
 	}
 
 	/**
@@ -653,7 +678,7 @@ class Updater {
 
 		update_option( $cache_key, $data, 'no' );
 
-		// Delete the duplicate option
+		// Delete the duplicate option.
 		delete_option( 'edd_api_request_' . md5( serialize( $this->slug . $this->api_data['license'] . $this->beta ) ) );
 	}
 
@@ -678,5 +703,4 @@ class Updater {
 
 		return 'edd_sl_' . md5( serialize( $string ) );
 	}
-
 }
