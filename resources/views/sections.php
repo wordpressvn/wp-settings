@@ -8,7 +8,6 @@
                     <?php WPVNTeam\WPSettings\view('section', compact('section')); ?>
                 <?php } ?>
             </div>
-            <hr>
             <?php wp_nonce_field('wp_settings_save_' . $settings->option_name, '_wpnonce'); ?>            
             <?php if (strpos(strval($section->slug), '1') === false) { ?>
                 <?php submit_button(); ?>
@@ -18,7 +17,6 @@
         <?php if ($sidebar = $settings->get_sidebar()) { ?>
         <div id="postbox-container-1" class="postbox-container sidebar">
             <h3><?php echo $sidebar['title']; ?></h3>
-            <hr>
             <div><?php echo $sidebar['message']; ?></div>
         </div>
         <?php } ?>

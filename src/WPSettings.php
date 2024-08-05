@@ -1,6 +1,6 @@
 <?php
 
-/** v1.6.0 **/
+/** v1.7.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -201,6 +201,10 @@ class WPSettings
             align-items: center;
             box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
         }
+        header > h2 > a {
+            text-decoration: none;
+            color: #000;
+        }
         header > h2 > span {
             margin-left: 5px;
             padding: 0 5px;
@@ -248,6 +252,8 @@ class WPSettings
         }
         .nav-tab-wrapper {
             border-bottom: 1px solid #EAECF0;
+            padding-left: 15px;
+            padding-top: 20px;
         }
         .nav-tab-active,
         .nav-tab-active:hover,
@@ -350,6 +356,12 @@ class WPSettings
                 width: 100%;
             }
         }
+        .tab-content {
+            padding: 15px 20px 0 20px;
+        }
+        .form-table {
+            border: 1px solid #F6F7F7;
+        }
         .forminp-check {
             display: flex;
             align-items: center
@@ -405,23 +417,27 @@ class WPSettings
         .form-table th {
             padding: 15px 20px !important;
         }
-        #wrap-extra .title,
         #wrap-extra .submit {
+            margin-top: 10px;
             padding-left: 20px;
             padding-right: 20px;
         }
-
-        #wrap-extra .sidebar h3 {
-            padding: 0 15px;
+        #wrap-extra .submit .button {
+            padding: 4px 12px;
+            background: #5f3afc;
+            border-color: #5f3afc;
+            border-radius: 5px;
+            font-weight: 600;
         }
-
+        #wrap-extra .submit .button:hover {
+            background: #4338ca;
+        }
+        #wrap-extra .sidebar h3 {
+            padding: 0 15px 15px;
+            border-bottom: 1px solid #EAECF0;
+        }
         #wrap-extra .sidebar > div {
             padding: 0 15px 15px;
-        }
-
-        #wrap-extra hr {
-            border-top: 1px solid #EAECF0;
-            border-bottom: unset !important;
         }
         #wpfooter {
             padding: 15px 20px;
