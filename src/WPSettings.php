@@ -1,6 +1,6 @@
 <?php
 
-/** v1.7.0 **/
+/** v1.8.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -362,6 +362,9 @@ class WPSettings
         .form-table {
             border: 1px solid #F6F7F7;
         }
+        .titledesc label{
+            cursor: pointer;
+        }
         .forminp-check {
             display: flex;
             align-items: center
@@ -523,22 +526,30 @@ class WPSettings
             return $footer_text;
         }
     }
+    
+    private function license_expired($exp_date) {
+        $today = date('Y-m-d H:i:s');
+        return $exp_date < $today;
+    }
 
     public function admin_notice() {
         $lic = get_option($this->option_name);
-        if ( (!isset($lic['license_status']) || $lic['license_status'] !== 'valid') && isset($_GET['page']) && $_GET['page'] === $this->slug ) {
-            wp_admin_notice(
-                sprintf(
+        if (isset($_GET['page']) && $_GET['page'] === $this->slug) {
+            if (isset($lic['license_expires']) && $this->license_expired($lic['license_expires'])) {
+                echo '<div class="notice notice-error is-dismissible">';
+                echo '<p>' . esc_html__('Your license key has expired.', 'wp-extra') . '</p>';
+                echo '</div>';
+            } elseif (isset($lic['license_status']) && $lic['license_status'] !== 'valid') {
+                $url = esc_url(admin_url('admin.php?page=' . $this->slug . '&tab=license'));
+                echo '<div class="notice notice-warning is-dismissible">';
+                echo '<p>' . sprintf(
                     /* translators: 1. link to plugin site; 2. link to plugin name */
-                    __( 'Activate <a href="%1$s">your license</a> to enable access to updates, support & PRO features for <strong>%2$s</strong>.' ),
-                    admin_url('admin.php?page='.$this->slug.'&tab=license'),
-                    $this->title
-                ),
-                array(
-                    'type'               => 'warning',
-                    'dismissible'        => false,
-                )
-            );
+                    __('Activate <a href="%1$s">your license</a> to enable access to updates, support & PRO features for <strong>%2$s</strong>.', 'wp-extra'),
+                    esc_url($url),
+                    esc_html($this->title)
+                ) . '</p>';
+                echo '</div>';
+            }
         }
     }
 

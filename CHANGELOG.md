@@ -4,6 +4,11 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 1.8.0 - 2024-08-19
+
+- [FIX] edd
+- [FIX] label
+
 ## 1.7.0 - 2024-08-05
 
 - [FIX] setting ui

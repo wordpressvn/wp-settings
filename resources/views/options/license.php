@@ -1,54 +1,62 @@
 <?php
-if(isset($_POST['license_activate'])) {
-    $option->check();
+if (isset($_POST['license_activate'])) {
     $option->activate();
-} elseif(isset($_POST['license_deactivate'])) {
+} elseif (isset($_POST['license_deactivate'])) {
     $option->deactivate();
 }
-$lic = get_option($option->section->tab->settings->option_name);
-$status = isset($lic['license_status']) ? trim($lic['license_status']) : 'unverified';
-if ( $option->get_value_attribute() && $status !== false && $status == 'valid' ) {
-    $license_status = __( 'Your account is now active!' );
-    $dashicons      = "dashicons-cloud";
-    $color          = "color:green";
-    $activate_btn   = "display:none";
-    $deactivate_btn = "";
-    $input_disabled = " disabled";
-    $text_link = __( 'Support' );
-} else {
-    $license_status = __( 'Invalid activation key.' );
-    $dashicons      = "dashicons-warning";
-    $color          = "color:red";
-    $activate_btn   = "";
-    $deactivate_btn = "display:none";
-    $input_disabled = "";
-    $text_link = __( 'Free License' );
-}
+$license = get_option($option->section->tab->settings->option_name);
+$license_status = isset($license['license_status']) ? trim($license['license_status']) : 'unverified';
+$is_valid = $option->get_value_attribute() && $license_status === 'valid';
+$status = $is_valid ? __('Your account is now active!') : __('Invalid activation key.');
+$color = $is_valid ? 'background: rgba(18, 183, 106, 0.15); border: 1px solid rgba(18, 183, 106, 0.24); color: rgb(18, 183, 106); ' : 'background: rgba(209, 55, 55, 0.24); border: 1px solid rgba(209, 55, 55, 0.24); color: rgba(209, 55, 55, 1);';
+$activate_btn_style = $is_valid ? 'display:none;' : '';
+$deactivate_btn_style = $is_valid ? '' : 'display:none;';
+$input_disabled = $is_valid ? ' disabled' : '';
+$expiration_date = isset($license['license_expires']) ? date('d/m/Y', strtotime($license['license_expires'])) : __('N/A');
 ?>
 <tr valign="top">
     <th scope="row" class="titledesc">
-        <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>"><?php echo $option->get_label(); ?></label>
+        <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>">
+            <?php echo $option->get_label(); ?>
+        </label>
     </th>
     <td class="forminp forminp-text">
-        <input name="<?php echo esc_attr($option->get_name_attribute()); ?>" id="<?php echo $option->get_id_attribute(); ?>" type="password" value="<?php echo $option->get_value_attribute(); ?>" class="regular-text <?php echo $option->get_input_class_attribute(); ?>" <?php echo $input_disabled; ?>>
-        <span style="<?php echo $activate_btn; ?>">
-            <input type='submit' class='button-primary' name='license_activate' value="<?php _e( 'Activate' ); ?>" />
+        <input
+            name="<?php echo esc_attr($option->get_name_attribute()); ?>"
+            id="<?php echo $option->get_id_attribute(); ?>"
+            type="password"
+            value="<?php echo $option->get_value_attribute(); ?>"
+            class="regular-text <?php echo $option->get_input_class_attribute(); ?>"
+            <?php echo $input_disabled; ?>
+        >
+        <span style="<?php echo $activate_btn_style; ?>">
+            <?php submit_button( __( 'Activate' ), 'primary', 'license_activate', false ); ?>
         </span>
-        <span style="<?php echo $deactivate_btn; ?>">
-        <input type='submit' class='button-secondary' name='license_deactivate' value="<?php _e( 'Deactivate' ); ?>" />
+        <span style="<?php echo $deactivate_btn_style; ?>">
+            <?php submit_button( __( 'Deactivate' ), 'secondary', 'license_deactivate', false ); ?>
         </span>
         <p class="description">
-            <a href="<?php echo $option->get_arg('download'); ?>" target="_blank" /><?php _e( 'Don\'t have a license? Click here to purchase.' ); ?></a>
+            <a href="<?php echo $option->get_arg('description'); ?>" target="_blank">
+                <?php _e('Don\'t have a license? Click here to purchase.', 'wp-extra'); ?>
+            </a>
         </p>
-        <?php if($error = $option->has_error()) { ?>
+        <?php if ($error = $option->has_error()) : ?>
             <div class="wps-error-feedback"><?php echo $error; ?></div>
-        <?php } ?>
+        <?php endif; ?>
     </td>
 </tr>
-<tr valign="top"><th><?php _e( 'Status' ); ?></th>
-<td>
-    <span style="line-height:30px; <?php echo $color; ?>">
-        <span class='dashicons <?php echo $dashicons ?>' style='line-height:30px;'></span>
-        <?php echo $license_status ?>
-    </span>
-</td></tr>
+<tr valign="top">
+    <th><?php _e('Status'); ?></th>
+    <td>
+        <span style="height: 24px; line-height: 24px; border-radius: 100px;padding: 5px 10px; <?php echo $color; ?>">
+            <?php echo $status; ?>
+        </span>
+    </td>
+</tr>
+<tr valign="top">
+    <th><?php _e('Expiration'); ?></th>
+    <td><?php echo esc_html($expiration_date); ?></td>
+</tr>
+<tr valign="top">
+    <td colspan="2"></td>
+</tr>
