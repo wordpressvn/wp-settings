@@ -9,7 +9,10 @@
             id="<?php echo $option->get_id_attribute(); ?>"
             type="<?php echo $option->get_arg('type', 'text'); ?>"
             value="<?php echo $option->get_value_attribute(); ?>"
-            class="<?php echo $option->get_input_class_attribute(); ?>">
+            class="<?php echo $option->get_input_class_attribute(); ?>"
+            <?php if ($min = $option->get_arg('min')) echo ' min="' . esc_attr($min) . '"'; ?>
+            <?php if ($max = $option->get_arg('max')) echo ' max="' . esc_attr($max) . '"'; ?>
+            <?php if ($step = $option->get_arg('step')) echo ' step="' . esc_attr($step) . '"'; ?>>
 
         <?php if(($description = $option->get_arg('description')) && ($option->get_arg('type') == 'number')) { ?>
             <?php echo $description; ?>

@@ -1,6 +1,6 @@
 <?php
 
-/** v1.8.0 **/
+/** v1.9.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -298,7 +298,7 @@ class WPSettings
             content: "PRO ";
             position: absolute;
             top: 23px;
-            right: 0;
+            right: 10px;
             padding: 0 5px;
             background: #ff3030;
             border-radius: 100px;
@@ -359,9 +359,6 @@ class WPSettings
         .tab-content {
             padding: 15px 20px 0 20px;
         }
-        .form-table {
-            border: 1px solid #F6F7F7;
-        }
         .titledesc label{
             cursor: pointer;
         }
@@ -416,9 +413,22 @@ class WPSettings
         .forminp-check input:checked ~ .description span:nth-of-type(2) {
             display: none;
         }
+        .form-table > tbody > :nth-child(odd) {
+            background-color: #fff !important;
+        }
+        .form-table {
+            border: 1px solid #EEEEEE;
+            border-top: none;
+        }
         .form-table td,
         .form-table th {
             padding: 15px 20px !important;
+            border-top: 1px solid #EEEEEE;
+            margin-bottom: 0 !important;
+        }
+        .form-table th {
+            border-right: 1px solid #EEEEEE;
+            background: #F9F9F9;
         }
         #wrap-extra .submit {
             margin-top: 10px;

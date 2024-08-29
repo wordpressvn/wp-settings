@@ -1,6 +1,6 @@
 <div id="wrap-extra">
     <header>
-        <h2><a href="<?php echo $settings->get_url(); ?>"><?php echo $settings->title; ?></a><span><?php echo $settings->version; ?></span></h2>
+        <h2><?php echo $settings->title; ?><span><?php echo $settings->version; ?></span></h2>
         <?php $settings->render_tab_menu(); ?>
     </header>
     <div class="wrap">

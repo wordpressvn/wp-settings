@@ -36,12 +36,14 @@ class Media extends OptionAbstract
             return wp_get_attachment_image_src($value, 'thumbnail')[0];
         }
 
-        if (strpos($attachment['mime_type'], 'video') !== false) {
-            return '/wp-includes/images/media/video.png';
-        }
+        if (isset($attachment['mime_type'])) {
+            if (strpos($attachment['mime_type'], 'video') !== false) {
+                return '/wp-includes/images/media/video.png';
+            }
 
-        if (strpos($attachment['mime_type'], 'audio') !== false) {
-            return '/wp-includes/images/media/audio.png';
+            if (strpos($attachment['mime_type'], 'audio') !== false) {
+                return '/wp-includes/images/media/audio.png';
+            }
         }
 
         return $fallback;

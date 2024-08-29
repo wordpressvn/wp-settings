@@ -4,6 +4,12 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 1.9.0 - 2024-08-29
+
+- [FIX] setting ui
+- [REMOVE] sizes
+- [NEW] min max step number
+
 ## 1.8.0 - 2024-08-19
 
 - [FIX] edd
