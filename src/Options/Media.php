@@ -52,9 +52,9 @@ class Media extends OptionAbstract
     public function get_media_library_config()
     {
         return wp_parse_args($this->get_arg('media_library', []), [
-            'title' => 'Select Media',
+            'title' => __('Add Media'),
             'button' => [
-                'text' => 'Select Media',
+                'text' => __('Add Media'),
             ],
             'multiple' => false,
         ]);

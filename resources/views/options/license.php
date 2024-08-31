@@ -57,6 +57,3 @@ $expiration_date = isset($license['license_expires']) ? date('d/m/Y', strtotime(
     <th><?php _e('Expiration'); ?></th>
     <td><?php echo esc_html($expiration_date); ?></td>
 </tr>
-<tr valign="top">
-    <td colspan="2"></td>
-</tr>

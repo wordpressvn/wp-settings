@@ -460,6 +460,9 @@ class WPSettings
         #footer-thankyou {
             font-style: normal;
         }
+        #license-1 {
+            padding-bottom:20px;
+        }
         </style>
         <?php
         }
