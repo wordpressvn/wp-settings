@@ -1,6 +1,6 @@
 <?php
 
-/** v1.9.0 **/
+/** v2.0.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -218,11 +218,13 @@ class WPSettings
             background: #fff;
             box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
         }
-
-        #wrap-extra .form-table th .dashicons {
-            color: #8796af;
+        #wrap-extra .form-table th a {
+            text-decoration:none; 
+            float: right;
         }
-
+        #wrap-extra .form-table th .dashicons {
+            color: #797979;
+        }
         .notice-success,
         .notice-warning,
         .notice-error,
@@ -436,11 +438,10 @@ class WPSettings
             padding-right: 20px;
         }
         #wrap-extra .submit .button {
-            padding: 4px 12px;
+            padding: 2px 12px;
             background: #5f3afc;
             border-color: #5f3afc;
             border-radius: 5px;
-            font-weight: 600;
         }
         #wrap-extra .submit .button:hover {
             background: #4338ca;
@@ -451,6 +452,49 @@ class WPSettings
         }
         #wrap-extra .sidebar > div {
             padding: 0 15px 15px;
+        }
+        [aria-label] {
+            position: relative;
+        }
+        [aria-label]:before,
+        [aria-label]:after {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            transition: all .2s ease;
+            font-size: 11px;
+        }
+        [aria-label]:before {
+            content: attr(aria-label);
+            height: 13px;
+            position: absolute;
+            top: -20px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            line-height: 1.2;
+            color: #fff;
+            background: #000;
+            box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
+        }
+        [aria-label]:after {
+            content: '';
+            border-left: 5px solid transparent;
+            top: 2px;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #000;
+        }
+        [aria-label]:not([aria-label=""]):hover:before {
+            visibility: visible;
+            opacity: 1;
+            top: -30px
+        }
+        [aria-label]:not([aria-label=""]):hover:after {
+            visibility: visible;
+            opacity: 1;
+            top: -8px
         }
         #wpfooter {
             padding: 15px 20px;

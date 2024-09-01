@@ -1,10 +1,8 @@
 <tr valign="top" class="<?php echo $option->get_hide_class_attribute(); ?>">
-    <th scope="row" class="titledesc">
+    <td colspan="2" class="forminp forminp-text">
         <?php if($description = $option->get_arg('description')) { ?>
             <label class="<?php echo $option->get_label_class_attribute(); ?>"><?php echo $description; ?></label>
         <?php } ?>
-    </th>
-    <td class="forminp forminp-text">
         <input
             name="<?php echo esc_attr($option->get_name_attribute()); ?>"
             id="<?php echo $option->get_id_attribute(); ?>"

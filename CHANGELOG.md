@@ -4,6 +4,10 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 2.0.0 - 2024-09-01
+
+- [FIX] setting ui
+
 ## 1.9.0 - 2024-08-29
 
 - [FIX] setting ui
