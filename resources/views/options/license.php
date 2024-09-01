@@ -19,7 +19,7 @@ $expiration_date = isset($license['license_expires']) ? date('d/m/Y', strtotime(
         <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>">
         <?php echo $option->get_label(); ?>
         <?php if($link = $option->get_arg('link')) { ?>
-            <a target="_blank" href="<?php echo esc_url($link); ?>" aria-label="<?php _e('Help'); ?>"><span class="dashicons dashicons-editor-help"></span></a>
+            <a target="_blank" href="<?php echo esc_url($link); ?>" tooltip="<?php _e('Help'); ?>"><span class="dashicons dashicons-editor-help"></span></a>
         <?php } ?>
         </label>
     </th>
@@ -39,7 +39,7 @@ $expiration_date = isset($license['license_expires']) ? date('d/m/Y', strtotime(
             <?php submit_button( __( 'Deactivate' ), 'secondary', 'license_deactivate', false ); ?>
         </span>
         <p class="description">
-            <a href="<?php echo $option->get_arg('download'); ?>" target="_blank">
+            <a href="<?php echo $option->get_arg('description'); ?>" target="_blank">
                 <?php _e('Don\'t have a license? Click here to purchase.', 'wp-extra'); ?>
             </a>
         </p>

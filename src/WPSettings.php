@@ -453,11 +453,11 @@ class WPSettings
         #wrap-extra .sidebar > div {
             padding: 0 15px 15px;
         }
-        [aria-label] {
+        [tooltip] {
             position: relative;
         }
-        [aria-label]:before,
-        [aria-label]:after {
+        [tooltip]:before,
+        [tooltip]:after {
             visibility: hidden;
             opacity: 0;
             position: absolute;
@@ -465,36 +465,36 @@ class WPSettings
             transform: translateX(-50%);
             white-space: nowrap;
             transition: all .2s ease;
-            font-size: 11px;
+            font-size: 12px;
         }
-        [aria-label]:before {
-            content: attr(aria-label);
+        [tooltip]:before {
+            content: attr(tooltip);
             height: 13px;
             position: absolute;
             top: -20px;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 6px;
+            border-radius: 3px;
             line-height: 1.2;
             color: #fff;
             background: #000;
             box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
         }
-        [aria-label]:after {
+        [tooltip]:after {
             content: '';
             border-left: 5px solid transparent;
-            top: 2px;
+            top: 0px;
             border-right: 5px solid transparent;
             border-top: 5px solid #000;
         }
-        [aria-label]:not([aria-label=""]):hover:before {
+        [tooltip]:not([tooltip=""]):hover:before {
             visibility: visible;
-            opacity: 1;
+            opacity: 0.8;
             top: -30px
         }
-        [aria-label]:not([aria-label=""]):hover:after {
+        [tooltip]:not([tooltip=""]):hover:after {
             visibility: visible;
-            opacity: 1;
-            top: -8px
+            opacity: 0.8;
+            top: -5px
         }
         #wpfooter {
             padding: 15px 20px;

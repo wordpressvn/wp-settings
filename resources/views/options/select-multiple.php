@@ -2,7 +2,7 @@
     <th scope="row" class="titledesc">
         <label for="<?php echo $option->get_id_attribute(); ?>" class="<?php echo $option->get_label_class_attribute(); ?>"><?php echo $option->get_label(); ?>
         <?php if($link = $option->get_arg('link')) { ?>
-            <a target="_blank" href="<?php echo esc_url($link); ?>" aria-label="<?php _e('Help'); ?>"><span class="dashicons dashicons-editor-help"></span></a>
+            <a target="_blank" href="<?php echo esc_url($link); ?>" tooltip="<?php _e('Help'); ?>"><span class="dashicons dashicons-editor-help"></span></a>
         <?php } ?>
         </label>
     </th>
