@@ -7,6 +7,8 @@ All notable changes to `wp-settings` will be documented in this file
 ## 2.0.0 - 2024-09-01
 
 - [FIX] setting ui
+- [FIX] css
+- [FIX] sidebar
 
 ## 1.9.0 - 2024-08-29
 

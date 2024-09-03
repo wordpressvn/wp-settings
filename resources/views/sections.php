@@ -14,11 +14,15 @@
             <?php } ?>
         </form>
         </div>
-        <?php if ($sidebar = $settings->get_sidebar()) { ?>
-        <div id="postbox-container-1" class="postbox-container sidebar">
-            <h3><?php echo $sidebar['title']; ?></h3>
-            <div><?php echo $sidebar['message']; ?></div>
-        </div>
+        <?php if ($sidebars = $settings->get_sidebar()) { ?>
+            <div id="postbox-container-1" class="postbox-container sidebar">
+                <?php foreach ($sidebars as $sidebar) { ?>
+                    <div class="postbox">
+                        <h3 class="hndle"><?php echo $sidebar['title']; ?></h3>
+                        <div class="inside"><?php echo $sidebar['message']; ?></div>
+                    </div>
+                <?php } ?>
+            </div>
         <?php } ?>
     </div>
 </div>
