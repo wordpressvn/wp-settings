@@ -1,12 +1,8 @@
 {
     "name": "wordpressvn/wp-settings",
     "description": "Handy wrapper to make creating WordPress settings pages a breeze.",
-    "license": "MIT",
+    "license": "GPL-2.0",
     "authors": [
-        {
-            "name": "Jeffrey van Rossum",
-            "email": "jeffrey@vanrossum.dev"
-        },
         {
             "name": "TienCOP",
             "email": "support@wordpressvn.com"
@@ -18,8 +14,8 @@
     },
     "require-dev": {
         "phpcompatibility/php-compatibility": "*",
-        "laravel/pint": "^1.4",
-        "spatie/ray": "^1.36"
+        "laravel/pint": "^1.17.3",
+        "spatie/ray": "^1.41.2"
     },
     "autoload": {
         "psr-4": {

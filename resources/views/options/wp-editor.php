@@ -7,7 +7,8 @@
         </label>
     </th>
     <td class="forminp forminp-text">
-        <?php \wp_editor(wp_kses_post($option->get_value_attribute()), $option->get_id_attribute(), [
+        <?php $value = (string) $option->get_value_attribute();
+        \wp_editor(wp_kses_post($value), $option->get_id_attribute(), [
             'textarea_name' => $option->get_name_attribute(),
             'wpautop' => $option->get_arg('wpautop', true),
             'teeny' => $option->get_arg('teeny', false),
