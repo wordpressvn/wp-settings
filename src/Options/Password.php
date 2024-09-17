@@ -2,6 +2,8 @@
 
 namespace WPVNTeam\WPSettings\Options;
 
+use WPVNTeam\WPSettings\Enqueuer;
+
 class Password extends OptionAbstract
 {
     public $view = 'password';
@@ -17,9 +19,12 @@ class Password extends OptionAbstract
     {
         return base64_encode($value);
     }
-    
-    public function enqueue() {
-        wp_enqueue_script('user-profile', admin_url('js/user-profile.min.js'), array('jquery'), null, true);
+
+    public function enqueue()
+    {
+        Enqueuer::add('user-profile', function () {
+            wp_enqueue_script('user-profile', admin_url('js/user-profile.min.js'), array('jquery'), null, true);
+        });
     }
 
 }

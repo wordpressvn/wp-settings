@@ -1,47 +1,3 @@
-
-[tooltip] {
-    position: relative;
-}
-[tooltip]:before,
-[tooltip]:after {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    transition: all .2s ease;
-    font-size: 12px;
-}
-[tooltip]:before {
-    content: attr(tooltip);
-    height: 13px;
-    position: absolute;
-    top: -20px;
-    padding: 6px;
-    border-radius: 3px;
-    line-height: 1.2;
-    color: #fff;
-    background: #000;
-    box-shadow: 0 3px 8px rgba(165, 165, 165, 0.5);
-}
-[tooltip]:after {
-    content: '';
-    border-left: 5px solid transparent;
-    top: 0px;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #000;
-}
-[tooltip]:not([tooltip=""]):hover:before {
-    visibility: visible;
-    opacity: 0.8;
-    top: -30px
-}
-[tooltip]:not([tooltip=""]):hover:after {
-    visibility: visible;
-    opacity: 0.8;
-    top: -5px
-}
 header {
     background: #fff;
     margin-left: -20px;
@@ -58,10 +14,51 @@ header > h2 > a {
 header > h2 > span {
     margin-left: 5px;
     padding: 0 5px;
-    background: linear-gradient(90.52deg, #3E8BFF 0.44%, #A45CFF 113.3%);
-    border-radius: 100px;
+    background: rgba(122, 0, 223, .04);
+    border-radius: 2px;
     font-size: 11px;
-    color: #fff;
+    color: #7a00df;
+}
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+.nav-menu .nav-item {
+    margin-bottom: 0;
+}
+.nav-menu .nav-link {
+    transition: all 0.3s ease 0s;
+    color: #555d66;
+    display: inline-block;
+    padding: 6px 10px;
+    text-decoration: none;
+    position: relative;
+}
+.nav-menu .nav-link span, .nav-menu .nav-link svg {
+    display: block;
+    margin: 0 auto;
+    width:24px;
+    height:24px;
+}
+.nav-menu .nav-link.active, .nav-menu li:hover>a, .nav-menu li>a:focus {
+    background: #F9F9F9;
+    color: #191e23;
+}
+.nav-menu .nav-link.active::before, .nav-menu li:hover>a::before, .nav-menu li>a:focus::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 100%;
+    background-color: #5f3afc;
+    border-radius: 2px;
+    animation: slideIn 0.4s ease forwards;
+}
+@keyframes slideIn {
+    from {width: 0;} to {width: 100%;}
 }
 #poststuff #post-body #post-body-content, #poststuff #post-body .postbox {
     border-radius: 5px;
@@ -69,33 +66,11 @@ header > h2 > span {
     box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.1);
     border: 1px solid #fff;
 }
-#wrap-extra .form-table th a {
-    text-decoration:none; 
-    float: right;
-}
-#wrap-extra .form-table th .dashicons {
-    color: #797979;
-}
-.notice-success,
-.notice-warning,
-.notice-error,
-.notice-info {
-    border-radius: 5px;
+.notice-success, .notice-warning, .notice-error, .notice-info {
+    border-radius: 3px;
     border-top-width: 0px;
     border-right-width: 0px;
     border-bottom-width: 0px;
-}
-.notice-success {
-    background: #edf7ef
-}
-.notice-warning {
-    background: #fffbf0
-}
-.notice-error {
-    background: #f7eeeb
-}
-.notice-info {
-    background: #edf5f7
 }
 .nav-tab {
     border-top-color: #fff;
@@ -132,6 +107,20 @@ header > h2 > span {
     margin-right: 5px;
     margin-left: -5px;
 }
+.components-tooltip {
+    display: inline-block;
+}
+.ui-tooltip-content::after, .ui-tooltip-content::before {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -4px;
+    border-color: #000 transparent;
+    border-width: 5px 5px 0;
+}
 .pro * {
     pointer-events: none;
     opacity: 0.8;
@@ -158,144 +147,45 @@ pro {
     font-size: 11px;
     color: #fff;
 }
-.nav-menu {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0;
-}
-.nav-menu .nav-item {
-    margin-bottom: 0;
-}
-.nav-menu .nav-link {
-    transition: all 0.3s ease 0s;
-    color: #555d66;
-    display: inline-block;
-    padding: 10px;
-    text-decoration: none;
-    position: relative;
-}
-.nav-menu .nav-link > span {
-    display: block;
-    margin: 0 auto;
-}
-
-.nav-menu .nav-link.active,
-.nav-menu li:hover>a,
-.nav-menu li>a:focus {
-    background: #F9F9F9;
-    color: #191e23;
-}
-
-.nav-menu .nav-link.active::before,
-.nav-menu li:hover>a::before,
-.nav-menu li>a:focus::before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    height: 2px;
-    width: 100%;
-    background-color: #5f3afc;
-    border-radius: 2px;
-    animation: slideIn 0.4s ease forwards;
-}
-@keyframes slideIn {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-}
 .tab-content {
     padding: 15px 20px 0 20px;
 }
-.titledesc label{
-    cursor: pointer;
+.form-table th a {
+    text-decoration:none; 
+    float: right;
 }
-.forminp-check {
-    display: flex;
-    align-items: center
+.form-table th .dashicons {
+    color: #797979;
 }
-.forminp-check input {
-    width: 0 !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    position: absolute
-}
-.forminp-check input+label {
-    margin-top: 5px;
-    position: relative;
-    background: #a9adb3;
-    width: 32px;
-    min-width: 32px;
-    height: 16px;
-    margin-right: 8px;
-    display: inline-flex;
-    align-items: center;
-    border-radius: 24px;
-    cursor: pointer;
-    transition: background .2s ease-in-out;
-    text-indent: calc(32px + 8px);
-}
-.forminp-check input+label:after {
-    content: "";
-    background: #fff;
-    width: calc(18px - (3px * 2));
-    height: calc(18px - (3px * 2));
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    border-radius: 50%;
-    transition: left .3s ease-in-out, background .2s ease-in-out;
-}
-.forminp-check input:checked+label {
-    background: linear-gradient(90.52deg, #3e8bff .44%, #a45cff 113.3%)
-}
-.forminp-check input:checked+label:after {
-    left: calc(100% - calc(18px - 4px));
-}
-.description span:nth-of-type(1) {
-    display: none;
-}
-.forminp-check input:checked ~ .description span:nth-of-type(1) {
-    display: inline;
-}
-.forminp-check input:checked ~ .description span:nth-of-type(2) {
-    display: none;
+.form-table th svg {
+    fill: #797979;
 }
 .form-table > tbody > :nth-child(odd) {
     background-color: #fff !important;
 }
 .form-table {
-    border: 1px solid #EEEEEE;
-    border-top: none;
+    border: 1px solid #EEE;
 }
 .form-table td,
 .form-table th {
-    padding: 15px 20px !important;
-    border-top: 1px solid #EEEEEE;
-    margin-bottom: 0 !important;
+    border-top: 1px solid #EEE;
+    padding-left: 15px !important;
 }
 .form-table th {
-    border-right: 1px solid #EEEEEE;
+    border-right: 1px solid #EEE;
     background: #F9F9F9;
 }
-#wrap-extra .submit {
+.components-panel__row {
     margin-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0 20px 20px;
 }
-#wrap-extra .submit .button {
-    padding: 2px 12px;
-    background: #5f3afc;
-    border-color: #5f3afc;
-    border-radius: 5px;
+label{
+    cursor: pointer;
 }
-#wrap-extra .submit .button:hover {
-    background: #4338ca;
+code {
+    color: #3858e9;
+    background:rgba(var(--wp-admin-theme-color--rgb), .04);
+    border-radius: 4px;
 }
 #wpfooter {
     padding: 15px 20px;
@@ -305,7 +195,7 @@ pro {
 #footer-thankyou {
     font-style: normal;
 }
-#license-1 {
+#license-1, #cong-cu-1, #tools-1 {
     padding-bottom:20px;
 }
 #modules-modules .form-table {

@@ -9,17 +9,13 @@ use WPVNTeam\WPSettings\Options\Color;
 use WPVNTeam\WPSettings\Options\Image;
 use WPVNTeam\WPSettings\Options\Media;
 use WPVNTeam\WPSettings\Options\Select;
-use WPVNTeam\WPSettings\Options\SelectMultiple;
+use WPVNTeam\WPSettings\Options\Select2;
 use WPVNTeam\WPSettings\Options\Text;
 use WPVNTeam\WPSettings\Options\Button;
 use WPVNTeam\WPSettings\Options\Password;
 use WPVNTeam\WPSettings\Options\Textarea;
 use WPVNTeam\WPSettings\Options\Video;
 use WPVNTeam\WPSettings\Options\WPEditor;
-use WPVNTeam\WPSettings\Options\PostType;
-use WPVNTeam\WPSettings\Options\Taxonomy;
-use WPVNTeam\WPSettings\Options\Role;
-use WPVNTeam\WPSettings\Options\Tools;
 use WPVNTeam\WPSettings\Options\License;
 
 class Option
@@ -49,15 +45,11 @@ class Option
             'wp-editor' => WPEditor::class,
             'code-editor' => CodeEditor::class,
             'select' => Select::class,
-            'select-multiple' => SelectMultiple::class,
+            'select2' => Select2::class,
             'color' => Color::class,
             'media' => Media::class,
             'image' => Image::class,
             'video' => Video::class,
-            'post-type' => PostType::class,
-            'taxonomy' => Taxonomy::class,
-            'role' => Role::class,
-            'tools' => Tools::class,
             'license' => License::class,
         ]);
 

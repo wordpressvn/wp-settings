@@ -10,7 +10,19 @@
             </div>
             <?php wp_nonce_field('wp_settings_save_' . $settings->option_name, '_wpnonce'); ?>            
             <?php if (strpos(strval($section->slug), '1') === false) { ?>
-                <?php submit_button(); ?>
+            <div class="components-panel__row">
+                <?php
+                submit_button(__('Save'), 'components-button is-primary is-compact', 'submit', false);
+                submit_button(__('Restore'), 'components-button is-compact is-tertiary', 'reset', false, [
+                    'onclick' => 'return confirmReset();'
+                ]);
+                ?>
+                <script type="text/javascript">
+                function confirmReset() {
+                    return confirm("<?php _e( 'Are you sure you want to do this?' ); ?>");
+                }
+                </script>
+                </div>
             <?php } ?>
         </form>
         </div>

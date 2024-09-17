@@ -73,9 +73,9 @@ class Media extends OptionAbstract
                 }
 
                 .wps-media-wrapper .wps-media-preview {
+                    outline: 1px solid #0000001a;
                     width: 80px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
+                    border-radius: 4px;
                     display: flex;
                     align-items: center;
                     justify-content: center;

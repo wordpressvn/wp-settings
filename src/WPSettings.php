@@ -1,6 +1,6 @@
 <?php
 
-/** v2.1.0 **/
+/** v2.3.0 **/
 
 namespace WPVNTeam\WPSettings;
 
@@ -200,7 +200,9 @@ class WPSettings
         }
 
         if ($this->is_on_toplevel_page() || $this->is_on_settings_page() || $this->is_on_parent_page()) {
+            wp_enqueue_style('wp-components-style', includes_url('css/dist/components/style.css'));
             wp_enqueue_style('wp-settings', plugin_dir_url(__FILE__) . '../resources/css/wp-settings.css');
+            wp_enqueue_script('wp-settings', plugin_dir_url(__FILE__) . '../resources/js/wp-settings.js', ['jquery', 'clipboard', 'jquery-ui-tooltip'], null, true);
         }
 
         $this->styling_loaded = true;
@@ -235,23 +237,6 @@ class WPSettings
                         } else {
                             childrens.prop('disabled', !parent.is(':checked'));
                         }
-                    });
-
-                    $('.nav-tab-content .tab-content').not(':first').hide();
-                    $('.nav-section a').first().addClass('nav-tab-active');
-                    $('.nav-section a').on('click', function(e) {
-                        e.preventDefault();
-                        $('.nav-tab-content .tab-content').hide();
-                        var tabId = $(this).data('section');
-                        $('#' + tabId).show();
-                        $('.nav-section a').removeClass('nav-tab-active');
-                        $(this).addClass('nav-tab-active');
-                    });
-                    $('.select-all').click(function() {
-                        $(this).closest('td').find('input[type="checkbox"]').prop('checked', true);
-                    });
-                    $('.deselect').click(function() {
-                        $(this).closest('td').find('input[type="checkbox"]').prop('checked', false);
                     });
                 })(jQuery);
             </script>
@@ -391,14 +376,6 @@ class WPSettings
             }
         }
         
-        /* $url = add_query_arg($params, $this->get_url());
-
-        if (isset($params['tab']) && $params['tab'] == 'tools') {
-            return $url . '" enctype="multipart/form-data';
-        } else {
-            return $url;
-        } */
-        
         return add_query_arg($params, $this->get_url());
     }
 
@@ -456,7 +433,11 @@ class WPSettings
         }
 
         if (! current_user_can($this->capability)) {
-            wp_die(__('What do you think you are doing?'));
+            wp_die(__('You need a higher level of permission.'));
+        }
+        
+        if (isset($_POST['reset'])) {
+            return $this->reset();
         }
 
         $current_options = $this->get_options();
@@ -483,6 +464,34 @@ class WPSettings
         update_option($this->option_name, $new_options->pull());
 
         $this->flash->set('success', __('Changes saved.'));
+    }
+    
+    public function reset()
+    {
+        if (! isset($_POST['_wpnonce']) || ! wp_verify_nonce($_POST['_wpnonce'], 'wp_settings_save_' . $this->option_name)) {
+            return;
+        }
+
+        if (! current_user_can($this->capability)) {
+            wp_die(__('You need a higher level of permission.'));
+        }
+
+        $default_options = $this->get_default_options();
+        
+        update_option($this->option_name, $default_options);
+
+        $this->flash->set('success', __('Confirmation request initiated successfully.'));
+    }
+    
+    public function get_default_options()
+    {
+        $default_options = [];
+        foreach ($this->get_active_tab()->get_active_sections() as $section) {
+            foreach ($section->options as $option) {
+                $default_options[$option->implementation->get_option_key_path()] = $option->implementation->get_default_value();
+            }
+        }
+        return $default_options;
     }
 
     /**

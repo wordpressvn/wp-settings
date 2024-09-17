@@ -119,10 +119,10 @@ $section->add_option('select', [
 ]);
 ```
 
-#### Select Multiple
+#### Select2
 
 ```php
-$section->add_option('select-multiple', [
+$section->add_option('select2', [
     'name' => 'option_1',
     'label' => __('Option 1', 'textdomain'),
     'options' => [
