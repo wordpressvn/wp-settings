@@ -67,14 +67,12 @@ class Button extends OptionAbstract
                 function displayMessages(messages, index, input) {
                     if (index < messages.length && isRunning) {
                         $('#{$result}').append(messages[index]);
-                        
-                    $('#{$stop}').prop('disabled', false);
-                    
-                        setTimeout(function() {
-                            displayMessages(messages, index + 1, input);
-                        }, 1000);
+                        $('#{$stop}').prop('disabled', false);
+                            setTimeout(function() {
+                                displayMessages(messages, index + 1, input);
+                            }, 1000);
+                        }
                     }
-                }
             });");
         });
     }

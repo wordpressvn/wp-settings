@@ -19,8 +19,16 @@ class CodeEditor extends OptionAbstract
         wp_enqueue_style('wp-codemirror');
 
         $settings_name = str_replace('-', '_', $this->get_id_attribute());
-
-        wp_localize_script('jquery', $settings_name, wp_enqueue_code_editor(['type' => $this->get_arg('editor_type', 'text/html')]));
+        $editor_config = wp_enqueue_code_editor([
+            'type' => $this->get_arg('editor_type', 'text/html'),
+            'codemirror' => [
+                'autoRefresh'   => true,
+                'mode'          => 'htmlmixed',
+                'indentWithTabs'=> false,
+                'tabSize'       => 2,
+            ],
+        ]);
+        wp_localize_script('jquery', $settings_name, $editor_config);
 
         wp_add_inline_script('wp-theme-plugin-editor', 'jQuery(function($){
             if($("#'.$this->get_id_attribute().'").length > 0) {

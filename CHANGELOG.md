@@ -4,6 +4,18 @@ All notable changes to `wp-settings` will be documented in this file
 
 ## Unreleased
 
+## 2.6.0 - 2025-11-21
+
+- [FIX] Change core
+
+## 2.5.0 - 2024-10-17
+
+- [FIX] minify
+
+## 2.4.0 - 2024-10-10
+
+- [FIX] setting ui
+
 ## 2.3.0 - 2024-09-12
 
 - [FIX] setting ui

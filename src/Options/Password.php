@@ -22,8 +22,8 @@ class Password extends OptionAbstract
 
     public function enqueue()
     {
-        Enqueuer::add('user-profile', function () {
-            wp_enqueue_script('user-profile', admin_url('js/user-profile.min.js'), array('jquery'), null, true);
+        Enqueuer::add('wps-password', function () {
+            wp_enqueue_script('user-profile');
         });
     }
 

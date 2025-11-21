@@ -13,7 +13,7 @@
             <div class="components-panel__row">
                 <?php
                 submit_button(__('Save'), 'components-button is-primary is-compact', 'submit', false);
-                submit_button(__('Restore'), 'components-button is-compact is-tertiary', 'reset', false, [
+                submit_button(__('Restore'), 'components-button is-compact is-tertiary', 'do_reset', false, [
                     'onclick' => 'return confirmReset();'
                 ]);
                 ?>
@@ -30,7 +30,7 @@
             <div id="postbox-container-1" class="postbox-container sidebar">
                 <?php foreach ($sidebars as $sidebar) { ?>
                     <div class="postbox">
-                        <h3 class="hndle"><?php echo $sidebar['title']; ?></h3>
+                        <h3 class="postbox-header hndle" style="border-color: #EFEFEF"><?php echo $sidebar['title']; ?></h3>
                         <div class="inside"><?php echo $sidebar['message']; ?></div>
                     </div>
                 <?php } ?>

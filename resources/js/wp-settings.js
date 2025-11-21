@@ -1,19 +1,15 @@
 jQuery(function($) {
     var clipboard = new ClipboardJS('.clipboard'),
         successTimeout;
-
     clipboard.on('success', function(event) {
         var triggerElement = $(event.trigger),
             successElement = $('.success', triggerElement.closest('.copy-to-clipboard-container'));
-
         event.clearSelection();
         clearTimeout(successTimeout);
         successElement.removeClass('hidden').addClass('visible');
-
         successTimeout = setTimeout(function() {
             successElement.removeClass('visible').addClass('hidden');
         }, 3000);
-
         if (typeof wp !== 'undefined' && typeof wp.a11y !== 'undefined') {
             wp.a11y.speak(wp.i18n.__('The content has been copied to your clipboard'));
         }
@@ -26,23 +22,13 @@ jQuery(function($) {
             $span.removeClass('is-checked');
         }
     });
-    $('.tooltip').tooltip({
-        content: function() {
-            return $(this).attr('title');
-        },
-        tooltipClass: "components-tooltip",
-        position: {
-            my: "center bottom",
-            at: "center top-10"
-        }
-    });
     $('.nav-tab-content .tab-content').not(':first').hide();
     $('.nav-section a').first().addClass('nav-tab-active');
     $('.nav-section a').on('click', function(e) {
         e.preventDefault();
         $('.nav-tab-content .tab-content').hide();
         var tabId = $(this).data('section');
-        $('#' + tabId).show();
+        $('#' + tabId).fadeIn();
         $('.nav-section a').removeClass('nav-tab-active');
         $(this).addClass('nav-tab-active');
     });
